@@ -17,7 +17,7 @@ def set_environment(args):
         os.environ["BROWSER_FLAG"] = args.browser
     else:
         # Run tests for both browsers by default
-        os.environ["BROWSER_FLAG"] = 'both'
+        os.environ["BROWSER_FLAG"] = "both"
 
 def check_browser(browser):
     browser = browser.lower()

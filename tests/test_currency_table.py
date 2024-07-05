@@ -92,13 +92,14 @@ class TestCurrencyTable(unittest.TestCase):
                 date_input.send_keys(Keys.DELETE)
             date_input.click()
             date_input.send_keys(date)
+            sleep(1)
             date_input.send_keys(Keys.RETURN)
-            sleep(2)
         except:
             self.fail("Failed to enter date.")
 
         # Retrieve data from the currency table
         try:
+            sleep(3)
             currencyData = self.driver.find_element(*CurrencyTablePage.CURRENCY_TABLE)
             return self.get_table_data_as_string(currencyData)
         except:
@@ -110,9 +111,7 @@ class TestCurrencyTable(unittest.TestCase):
         rows = table.find_elements(By.TAG_NAME, "tr")
         for row in rows:
             cells = row.find_elements(By.TAG_NAME, "td")
-            for cell in cells:
-                table_data += cell.text + "\t"
-            table_data += "\n"
+            table_data += "\t".join(cell.text for cell in cells) + "\n"
         return table_data
 
 
