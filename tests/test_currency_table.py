@@ -1,8 +1,6 @@
 import unittest
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
 from utils.browser_setup import get_browser
 from page_objects.currency_table_page import CurrencyTablePage
 from time import sleep
