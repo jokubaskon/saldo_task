@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from utils.browser_setup import get_browser
+from page_objects.currency_table_page import CurrencyTablePage
 from time import sleep
 import re
 from parameterized import parameterized
@@ -73,9 +74,9 @@ class TestCurrencyTable(unittest.TestCase):
 
         # Enter currency code
         try:
-            currency_dropdown_main = self.driver.find_element(By.XPATH, '//*[@id="currency"]')
+            currency_dropdown_main = self.driver.find_element(*CurrencyTablePage.CURRENCY_INPUT_INITIAL)
             currency_dropdown_main.click()
-            currency_dropdown_child = self.driver.find_element(By.CSS_SELECTOR, 'input.sc-73a056d4-0:nth-child(1)')
+            currency_dropdown_child = self.driver.find_element(*CurrencyTablePage.CURRENCY_INPUT_AFTERCLICK)
             currency_dropdown_child.send_keys(currency)
             sleep(1)  # required for the currencies to load
             currency_dropdown_child.send_keys(Keys.RETURN)
@@ -84,7 +85,7 @@ class TestCurrencyTable(unittest.TestCase):
 
         # Enter date
         try:
-            date_input = self.driver.find_element(By.XPATH, "/html/body/div[1]/div[4]/div[2]/section/form/div[2]/div/div[1]/input")
+            date_input = self.driver.find_element(*CurrencyTablePage.DATE_INPUT)
             if(browser == "firefox"):
                 date_input.clear()
             # clear() doesn't work on chrome on this input
@@ -94,13 +95,13 @@ class TestCurrencyTable(unittest.TestCase):
             date_input.click()
             date_input.send_keys(date)
             date_input.send_keys(Keys.RETURN)
-            sleep(1)
+            sleep(2)
         except:
             self.fail("Failed to enter date.")
 
         # Retrieve data from the currency table
         try:
-            currencyData = self.driver.find_element(By.XPATH, "/html/body/div[1]/div[4]/div[3]/section/div[2]/div/table")
+            currencyData = self.driver.find_element(*CurrencyTablePage.CURRENCY_TABLE)
             return self.get_table_data_as_string(currencyData)
         except:
             self.fail("Failed to retrieve currency data.")

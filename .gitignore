@@ -1,5 +1,6 @@
 .venv/
 tests/__pycache__/
 utils/__pycache__/
+page_objects/__pycache__/
 driver/
 test-reports/
