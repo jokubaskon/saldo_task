@@ -11,10 +11,9 @@ def parse_args():
     return args
 
 def set_environment(args):
-    check_browser(args.browser)
-
     if args.browser:
         # Set the browser flag as an environment variable
+        check_browser(args.browser)
         os.environ["BROWSER_FLAG"] = args.browser
     else:
         # Run tests for both browsers by default
