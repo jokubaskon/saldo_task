@@ -13,11 +13,12 @@ def get_browser(browser_name):
         service = ChromeService(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service)
     elif browser_name.lower() == 'firefox':
-        #service = FirefoxService(GeckoDriverManager().install())
-        #driver = webdriver.Firefox(service=service)
-        options = Options()
-        options.binary_location = r'C:\\Program Files\\Mozilla Firefox\\firefox.exe'
-        driver = webdriver.Firefox(options)
+        service = FirefoxService(GeckoDriverManager().install())
+        driver = webdriver.Firefox(service=service)
+        # Uncomment to use local geckodriver
+        #options = Options()
+        #options.binary_location = r'C:\\Program Files\\Mozilla Firefox\\firefox.exe'
+        #driver = webdriver.Firefox(options)
     else:
         raise ValueError(f"Browser {browser_name} is not supported.")
     return driver
