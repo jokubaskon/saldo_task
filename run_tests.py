@@ -5,18 +5,26 @@ import argparse
 from datetime import datetime
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Run Selenium tests with a specified browser. If browser is not specified, runs with all of them.')
-    parser.add_argument('--browser', type=str, help='Browser to use for tests (chrome, firefox) if flag is not specified, runs tests on both of the browsers.')
+    parser = argparse.ArgumentParser(description="Run Selenium tests with a specified browser. If browser is not specified, runs with all of them.")
+    parser.add_argument("--browser", type=str, help="Browser to use for tests (chrome, firefox) if flag is not specified, runs tests on both of the browsers.")
     args = parser.parse_args()
     return args
 
 def set_environment(args):
+    check_browser(args.browser)
+
     if args.browser:
         # Set the browser flag as an environment variable
-        os.environ['BROWSER_FLAG'] = args.browser
+        os.environ["BROWSER_FLAG"] = args.browser
     else:
         # Run tests for both browsers by default
-        os.environ['BROWSER_FLAG'] = 'both'
+        os.environ["BROWSER_FLAG"] = 'both'
+
+def check_browser(browser):
+    browser = browser.lower()
+    supported_browsers = ["firefox", "chrome"]
+    if browser not in supported_browsers:
+        raise ValueError(f"{browser} is not supported.") 
 
 if __name__ == "__main__":
     args = parse_args()
@@ -25,14 +33,14 @@ if __name__ == "__main__":
     loader = unittest.TestLoader()
     suite = loader.discover(start_dir="tests")
 
-    output_dir = 'test-reports'
+    output_dir = "test-reports"
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    timestamp = datetime.now().strftime('%Y-%m-%d-%H-%M')
-    output_file = os.path.join(output_dir, f'results_{timestamp}.xml')
+    timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
+    output_file = os.path.join(output_dir, f"results_{timestamp}.xml")
 
-    with open(output_file, 'wb') as output:
+    with open(output_file, "wb") as output:
         runner = xmlrunner.XMLTestRunner(output=output)
         runner.run(suite)
 

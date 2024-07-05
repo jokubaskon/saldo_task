@@ -21,14 +21,14 @@ class TestCurrencyTable(unittest.TestCase):
 
     def setUp(self):
         BROWSER_FLAG = os.getenv("BROWSER_FLAG", "both")
-        if BROWSER_FLAG != 'both':
+        if BROWSER_FLAG != "both":
             self.browsers.append(BROWSER_FLAG)
         else:
-            self.browsers.append('firefox')
-            self.browsers.append('chrome')
+            self.browsers.append("firefox")
+            self.browsers.append("chrome")
 
     def tearDown(self):
-        if hasattr(self, 'driver') and self.driver is not None:
+        if hasattr(self, "driver") and self.driver is not None:
             self.driver.quit()
 
     # ----------------------------------------------- TESTS --------------------------------------------------------
@@ -84,10 +84,10 @@ class TestCurrencyTable(unittest.TestCase):
         # Enter date
         try:
             date_input = self.driver.find_element(*CurrencyTablePage.DATE_INPUT)
-            if(browser == "firefox"):
+            if browser == "firefox":
                 date_input.clear()
-            # clear() doesn't work on chrome on this input
-            elif(browser == "chrome"):
+            # clear() doesn't work on chrome for this input
+            elif browser == "chrome":
                 date_input.send_keys(Keys.CONTROL + "a")
                 date_input.send_keys(Keys.DELETE)
             date_input.click()

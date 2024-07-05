@@ -16,12 +16,14 @@ Results are output into test-reports folder in XML format.
 
 ## Steps to Launch the Python Script
 
+Python 3 or later is required.
+
 To run the automated tests, follow these steps:
 
 1. **Clone the repository:**
 
    ```bash
-   https://github.com/jokubaskon/saldo_task.git
+   git clone https://github.com/jokubaskon/saldo_task.git
    cd saldo_task
    ```
 
