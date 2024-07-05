@@ -7,6 +7,7 @@ from utils.browser_setup import get_browser
 from time import sleep
 import re
 from parameterized import parameterized
+import os
 
 class TestCurrencyTable(unittest.TestCase):
     dates = [
@@ -17,15 +18,27 @@ class TestCurrencyTable(unittest.TestCase):
     eur_regex = r"Euro\s+(\d+\.\d+)\s+(\d+\.\d+)"
     usd_regex = r"US Dollar\s+(\d+\.\d+)\s+(\d+\.\d+)"
     base_url = "https://www.xe.com/currencytables/"
-       
+    browsers = []
+
+    def setUp(self):
+        BROWSER_FLAG = os.getenv("BROWSER_FLAG", "both")
+        if BROWSER_FLAG != 'both':
+            self.browsers.append(BROWSER_FLAG)
+        else:
+            self.browsers.append('firefox')
+            self.browsers.append('chrome')
+
+    def tearDown(self):
+        if hasattr(self, 'driver') and self.driver is not None:
+            self.driver.quit()
 
     # ----------------------------------------------- TESTS --------------------------------------------------------
 
-    # Parameterize tests
+
+    # Parameterized currency value tests
     #
     # Label | Expected Value | Currency value to search for | Date | browser | Search regex
     @parameterized.expand([
-        
         ("usd_per_eur_ff", "1.0918121631244302", "USD", dates[0], "firefox", eur_regex),
         ("gbp_per_eur_ff", "0.8871386636267415", "GBP", dates[0], "firefox", eur_regex),
         ("pln_per_usd_ff", "3.9897698476779544", "PLN", dates[1], "firefox", usd_regex),
@@ -35,13 +48,13 @@ class TestCurrencyTable(unittest.TestCase):
         # Add more test cases as needed
     ])
     def test_currency_value(self, label, expected_value, currency_code, date, browser, regex):
-        print(f"Testing currency value {label}")
+        if browser not in self.browsers:
+            self.skipTest(f"Skipping test for browser: {browser}")
         self.setup_driver(browser)
         currency_data = self.extract_data(currency_code, date, browser)
         match = re.search(regex, currency_data)
         self.assertIsNotNone(match, f"{currency_code} data not found.")
         actual_value = match.group(2)
-        self.driver.quit()
 
         self.assertEqual(actual_value, expected_value, f"Expected value '{expected_value}', but got '{actual_value}'.")
 

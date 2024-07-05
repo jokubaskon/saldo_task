@@ -1,9 +1,27 @@
 import unittest
 import xmlrunner
 import os
+import argparse
 from datetime import datetime
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='Run Selenium tests with a specified browser. If browser is not specified, runs with all of them.')
+    parser.add_argument('--browser', type=str, help='Browser to use for tests (chrome, firefox, or both)')
+    args = parser.parse_args()
+    return args
+
+def set_environment(args):
+    if args.browser:
+        # Set the browser flag as an environment variable
+        os.environ['BROWSER_FLAG'] = args.browser
+    else:
+        # Run tests for both browsers by default
+        os.environ['BROWSER_FLAG'] = 'both'
+
 if __name__ == "__main__":
+    args = parse_args()
+    set_environment(args)
+
     loader = unittest.TestLoader()
     suite = loader.discover(start_dir="tests")
 
@@ -17,3 +35,4 @@ if __name__ == "__main__":
     with open(output_file, 'wb') as output:
         runner = xmlrunner.XMLTestRunner(output=output)
         runner.run(suite)
+

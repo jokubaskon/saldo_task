@@ -36,11 +36,11 @@ To run the automated tests, follow these steps:
    If one of them is missing, make sure to run the tests with one of these flags:
 
    ```
-   --firefox
+   --browser firefox
 
    or
 
-   --chrome
+   --browser chrome
    ```
 
 4. **Run the automated test:**
@@ -50,9 +50,9 @@ To run the automated tests, follow these steps:
    ```
 
    ```bash
-   python run_tests.py --firefox # Runs tests on firefox
+   python run_tests.py --browser firefox # Runs tests on firefox
    ```
 
    ```bash
-   python run_tests.py --chrome # Runs tests on chrome
+   python run_tests.py --browser chrome # Runs tests on chrome
    ```
