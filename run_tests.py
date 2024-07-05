@@ -6,7 +6,7 @@ from datetime import datetime
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Run Selenium tests with a specified browser. If browser is not specified, runs with all of them.')
-    parser.add_argument('--browser', type=str, help='Browser to use for tests (chrome, firefox, or both)')
+    parser.add_argument('--browser', type=str, help='Browser to use for tests (chrome, firefox) if flag is not specified, runs tests on both of the browsers.')
     args = parser.parse_args()
     return args
 
