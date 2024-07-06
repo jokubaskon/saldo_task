@@ -3,6 +3,7 @@ import xmlrunner
 import os
 import argparse
 from datetime import datetime
+from utils.browser_setup import SUPPORTED_BROWSERS
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Run Selenium tests with a specified browser. If browser is not specified, runs with all of them.")
@@ -21,8 +22,7 @@ def set_environment(args):
 
 def check_browser(browser):
     browser = browser.lower()
-    supported_browsers = ["firefox", "chrome"]
-    if browser not in supported_browsers:
+    if browser not in SUPPORTED_BROWSERS:
         raise ValueError(f"{browser} is not supported.") 
 
 if __name__ == "__main__":

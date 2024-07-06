@@ -5,6 +5,10 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium import webdriver
 
+# Globals
+SUPPORTED_BROWSERS = ["firefox", "chrome"]
+
+# Methods
 # Browsers available for testing
 def get_browser(browser_name):
     if browser_name.lower() == "chrome":
@@ -13,8 +17,6 @@ def get_browser(browser_name):
     elif browser_name.lower() == "firefox":
         service = FirefoxService(GeckoDriverManager().install())
         driver = webdriver.Firefox(service=service)
-        # Uncomment to use local geckodriver
-        #options = Options()
-        #options.binary_location = r'C:\\Program Files\\Mozilla Firefox\\firefox.exe'
-        #driver = webdriver.Firefox(options)
+    else:
+        raise ValueError(f"Browser {browser_name} is not supported.")
     return driver

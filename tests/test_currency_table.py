@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from utils.browser_setup import get_browser
 from page_objects.currency_table_page import CurrencyTablePage
 from time import sleep
+from utils.browser_setup import SUPPORTED_BROWSERS
 import re
 from parameterized import parameterized
 import os
@@ -24,8 +25,7 @@ class TestCurrencyTable(unittest.TestCase):
         if BROWSER_FLAG != "both":
             self.browsers.append(BROWSER_FLAG)
         else:
-            self.browsers.append("firefox")
-            self.browsers.append("chrome")
+            self.browsers = SUPPORTED_BROWSERS
 
     def tearDown(self):
         if hasattr(self, "driver") and self.driver is not None:
